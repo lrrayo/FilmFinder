@@ -1,0 +1,30 @@
+/* 
+  Localizable.strings
+  FilmFinder
+
+  Created by Laura Riera Rayo on 27/4/23.
+  
+*/
+
+"TabItemPopular" = "Popular";
+"TabItemBestRated" = "Best rated";
+"TabItemNewPlaying" = "New playing";
+"TabItemUpcoming" = "Upcomming";
+"TabItemDiscover" = "Discover";
+
+"MovieDetailOverview" = "Overview";
+"MovieDetailCast" = "Cast";
+
+"ErrorNoTitle" = "No title";
+"ErrorLoadingMovie" = "Error loading movie.";
+
+"Search" = "Search";
+"SearchViewTitle" = "Find your movie";
+"SearchViewSubtitle" = "What would you like to see today?";
+
+"WelcomeTitle" = "Welcome to Film finder!";
+"WelcomeInformation" = "Please select a movie from the left-hand menu; swipe from the left edge to show it.";
+
+"NetworkManagerNoInternet" = "No internet connection.";
+"NetworkManagerNoInternetAlert" = "Network connection seems to be offline.";
+

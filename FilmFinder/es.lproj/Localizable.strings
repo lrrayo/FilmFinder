@@ -1,0 +1,29 @@
+/* 
+  Localizable.strings
+  FilmFinder
+
+  Created by Laura Riera Rayo on 27/4/23.
+  
+*/
+
+"TabItemPopular" = "Populares";
+"TabItemBestRated" = "Mejor valoradas";
+"TabItemNewPlaying" = "Últimos estrenos";
+"TabItemUpcoming" = "Próximamente";
+"TabItemDiscover" = "Descubre";
+
+"MovieDetailOverview" = "Sinopsis";
+"MovieDetailCast" = "Reparto";
+
+"ErrorNoTitle" = "Sin título";
+"ErrorLoadingMovie" = "Error cargando la película.";
+
+"Search" = "Buscar";
+"SearchViewTitle" = "Encuentra tu película";
+"SearchViewSubtitle" = "¿Qué te apetece ver hoy?";
+
+"WelcomeTitle" = "Bienvenido a Film finder!";
+"WelcomeInformation" = "Por favor, selecciona una película del menú lateral; desliza desde la izquierda para mostrarlo.";
+
+"NetworkManagerNoInternet" = "Sin conexión a internet.";
+"NetworkManagerNoInternetAlert" = "Parece que no tienes conexión a internet.";
