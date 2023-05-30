@@ -11,7 +11,6 @@ struct MovieListView: View {
     @StateObject var viewModel = MovieListViewModel()
     @EnvironmentObject var networkMonitor: NetworkMonitor
     
-    //MARK: - Tab types
     let tabType: TabType
     
     var navigationTitle: LocalizedStringKey {
@@ -56,12 +55,12 @@ struct MovieListView: View {
                     await viewModel.getMovieList(fromTab: tabType)
                 }
                 .navigationTitle(navigationTitle)
-                
             } else {
                 NoInternetConnectionView()
                     .navigationTitle(navigationTitle)
             }
-            WelcomeView()
+            
+            WelcomeView() //just for large devices
         }
     }
 }

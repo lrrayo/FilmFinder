@@ -22,26 +22,15 @@ enum ImageType {
 
 class WebService {
     
-    // MARK: - Movie List
-    func fetchMovieList(withQueryType aQueryType: QueryType, path aPath: TabType, page aCurrentPage: Int, searchText aSearchText: String) async -> MovieList? {
-        
-        guard let url = getDataQuery(withQueryType: aQueryType, path: aPath, page: aCurrentPage, searchText: aSearchText) else {
-            print("Invalid URL")
-            return nil
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            let decodedResponse = try JSONDecoder().decode(MovieList.self, from: data)
-            return decodedResponse
+    static let sharedInstance = WebService()
+    private init() {}
     
-        } catch {
-            print("Invalid data: \(error.localizedDescription)")
-        }
-        return nil
+    enum ServiceError: Error {
+        case failedToCreateRequest
+        case failedToGetData
     }
     
+    // MARK: - Movie List
     func getDataQuery(withQueryType aQueryType: QueryType, path aPath: TabType, page aPage: Int, searchText aSearchText: String) -> URL? {
         var baseUrl = ""
         
@@ -64,14 +53,14 @@ class WebService {
         
         if aQueryType == .movieType || aQueryType == .searchType {
             var queryItems = [
-                URLQueryItem(name: "api_key", value: Constants.API_KEY),
-                URLQueryItem(name: "language", value: Locale.current.languageCode),
-                URLQueryItem(name: "region", value: Locale.current.regionCode),
-                URLQueryItem(name: "page", value: String(aPage))
+                URLQueryItem(name: Constants.API_QUERY_ITEMS_API_KEY, value: Constants.API_KEY),
+                URLQueryItem(name: Constants.API_QUERY_ITEMS_LANGUAGE, value: Locale.current.languageCode),
+                URLQueryItem(name: Constants.API_QUERY_ITEMS_REGION, value: Locale.current.regionCode),
+                URLQueryItem(name: Constants.API_QUERY_ITEMS_PAGE, value: String(aPage))
             ]
             
             if !aSearchText.isEmpty {
-                queryItems.append(URLQueryItem(name: "query", value: aSearchText))
+                queryItems.append(URLQueryItem(name: Constants.API_QUERY_ITEMS_QUERY, value: aSearchText))
             }
             
             urlComponents?.queryItems = queryItems
@@ -80,7 +69,7 @@ class WebService {
         return urlComponents?.url
     }
     
-    func getPathType(aPath: TabType) -> String {
+    private func getPathType(aPath: TabType) -> String {
         switch aPath {
         case .popular:
             return Constants.API_PATH_POPULAR
@@ -114,85 +103,32 @@ class WebService {
         
         var urlComponents = URLComponents(string: url)
         urlComponents?.queryItems = [
-            URLQueryItem(name: "language", value: Locale.current.languageCode)
+            URLQueryItem(name: Constants.API_QUERY_ITEMS_LANGUAGE, value: Locale.current.languageCode)
         ]
 
         return urlComponents?.url
     }
     
     // MARK: - Movie Details
-    func fetchMovieDetail(withMovieId aMovieId: Int) async -> MovieDetail? {
-        
-        guard let url = getDetailQuery(withMovieId: aMovieId) else {
-            print("Invalid URL")
-            return nil
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            let decodedResponse = try JSONDecoder().decode(MovieDetail.self, from: data)
-            return decodedResponse
-    
-        } catch {
-            print("Invalid data: \(error.localizedDescription)")
-        }
-        return nil
-    }
-    
-    func getDetailQuery(withMovieId aMovieId: Int) -> URL? { //https://api.themoviedb.org/3/movie/103578?api_key=e1d1e25da1c5f94277a4466e6d72b904&language=en-US
+    func getDetailQuery(withMovieId aMovieId: Int, andGetCredits aCredits: Bool) -> URL? { //https://api.themoviedb.org/3/movie/103578?api_key=e1d1e25da1c5f94277a4466e6d72b904&language=en-US
         var baseUrl = ""
         
         baseUrl += Constants.API_BASE_URL //https://api.themoviedb.org/3/
         baseUrl += Constants.API_PATH_MOVIE //https://api.themoviedb.org/3/movie/
         baseUrl += "\(aMovieId)" //https://api.themoviedb.org/3/movie/103578"
         
+        if aCredits {
+            baseUrl += Constants.API_QUERY_APPEND_CREDITS //https://api.themoviedb.org/3/movie/103578/credits
+        }
+        
         var urlComponents = URLComponents(string: baseUrl)
         let queryItems = [
-            URLQueryItem(name: "api_key", value: Constants.API_KEY),
-            URLQueryItem(name: "language", value: Locale.current.languageCode)
+            URLQueryItem(name: Constants.API_QUERY_ITEMS_API_KEY, value: Constants.API_KEY),
+            URLQueryItem(name: Constants.API_QUERY_ITEMS_LANGUAGE, value: Locale.current.languageCode)
         ]
         
         urlComponents?.queryItems = queryItems
                 
-        return urlComponents?.url
-    }
-    
-    // MARK: - Movie Credits
-    func fetchMovieCredits(withMovieId aId: Int) async -> Credits? {
-        guard let url = getCreditsQuery(withMovieId: aId) else {
-            print("Invalid URL")
-            return nil
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            let decodedResponse = try JSONDecoder().decode(Credits.self, from: data)
-            return decodedResponse
-    
-        } catch {
-            print("Error decoding: \(error)")
-        }
-        return nil
-    }
-    
-    func getCreditsQuery(withMovieId aMovieId: Int) -> URL? { //https://api.themoviedb.org/3/movie/640146/credits?api_key=e1d1e25da1c5f94277a4466e6d72b904&language=en-US
-        var baseUrl = ""
-        
-        baseUrl += Constants.API_BASE_URL //https://api.themoviedb.org/3/
-        baseUrl += Constants.API_PATH_MOVIE //https://api.themoviedb.org/3/movie/
-        baseUrl += "\(aMovieId)" //https://api.themoviedb.org/3/movie/640146"
-        baseUrl += Constants.API_QUERY_APPEND_CREDITS //https://api.themoviedb.org/3/movie/640146/credits
-        
-        var urlComponents = URLComponents(string: baseUrl)
-        let queryItems = [
-            URLQueryItem(name: "api_key", value: Constants.API_KEY),
-            URLQueryItem(name: "language", value: Locale.current.languageCode),
-        ]
-        
-        urlComponents?.queryItems = queryItems
-            
         return urlComponents?.url
     }
 }

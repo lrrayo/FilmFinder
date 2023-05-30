@@ -10,10 +10,9 @@ import Foundation
 @MainActor class MovieDetailViewModel: ObservableObject {
     @Published var movie: MovieDetail?
     @Published var cast = [Cast]()
-    private let service = WebService()
     
     func getMovieDetail(withId aMovieId: Int) async {
-        let decodedResponse = await service.fetchMovieDetail(withMovieId: aMovieId)
+        let decodedResponse = await WebService.sharedInstance.fetchMovieDetail(withMovieId: aMovieId)
         
         if let decodedResponse = decodedResponse {
             movie = decodedResponse
@@ -23,7 +22,7 @@ import Foundation
     
     func getMovieCast(withId aMovieId: Int) async {
         var resultsCast = [Cast]()
-        let decodedResponse = await service.fetchMovieCredits(withMovieId: aMovieId)
+        let decodedResponse = await WebService.sharedInstance.fetchMovieCredits(withMovieId: aMovieId)
         if let decodedResponse = decodedResponse {            
             resultsCast = decodedResponse.cast ?? resultsCast
         }

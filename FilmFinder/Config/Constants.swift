@@ -35,6 +35,13 @@ class Constants {
     //MARK: QueryStrings
     static let API_QUERY_APPEND_CREDITS:String = "/credits"
     
+    //MARK: QueryItems
+    static let API_QUERY_ITEMS_API_KEY: String = "api_key"
+    static let API_QUERY_ITEMS_LANGUAGE: String = "language"
+    static let API_QUERY_ITEMS_REGION: String = "region"
+    static let API_QUERY_ITEMS_PAGE: String = "page"
+    static let API_QUERY_ITEMS_QUERY: String = "query"
+    
     //MARK: - UI
     static let UI_MOVIE_GRID_LAYOUT_MIN:CGFloat = 140
     static let UI_MOVIE_GRID_LAYOUT_MAX:CGFloat = 300

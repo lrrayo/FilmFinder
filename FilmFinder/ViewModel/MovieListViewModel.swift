@@ -9,15 +9,13 @@ import Foundation
 
 @MainActor class MovieListViewModel: ObservableObject {
     @Published var movies: [Movie] = [Movie]()
-    
-    private let service = WebService()
-    
+        
     private var currentPage = 1
     
     func getMovieList(fromTab aSelectedTab: TabType) async {
-        let decodedResponse = await service.fetchMovieList(withQueryType: .movieType, path: aSelectedTab, page: currentPage, searchText: "")
+        let decodedResponse = await WebService.sharedInstance.fetchMovieList(withQueryType: .movieType, path: aSelectedTab, page: currentPage, searchText: "")
+        
         if let decodedResponse = decodedResponse {
-            
             for element in decodedResponse.results {
                 if !movies.contains(element) { movies.append(element); }
             }

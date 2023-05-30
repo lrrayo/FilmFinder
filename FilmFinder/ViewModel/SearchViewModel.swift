@@ -11,9 +11,7 @@ import Foundation
 @MainActor class SearchViewModel: ObservableObject {
     @Published var searchMovies: [Movie] = [Movie]()
     @Published var searchText = ""
-        
-    private let service = WebService()
-    
+
     var currentPage = 1
     private var searchTask: Task<Void, Never>?
     
@@ -32,7 +30,7 @@ import Foundation
     }
     
     func getSearchMovieList(searchText aSearchText: String) async {
-        let decodedResponse = await service.fetchMovieList(withQueryType: .searchType, path: .searching, page: currentPage, searchText: aSearchText)
+        let decodedResponse = await WebService.sharedInstance.fetchMovieList(withQueryType: .searchType, path: .searching, page: currentPage, searchText: aSearchText)
         if let decodedResponse = decodedResponse {
             
             for element in decodedResponse.results {

@@ -28,3 +28,5 @@
 "NetworkManagerNoInternet" = "No internet connection.";
 "NetworkManagerNoInternetAlert" = "Network connection seems to be offline.";
 
+"MovieListDownloadErrorAlertTitle" = "Error";
+"MovieListDownloadErrorAlertDescription" = "It looks like there was an error downloading data, please try again later.";

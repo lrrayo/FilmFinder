@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MovieGridCellView: View {
+struct MovieGridCellView: View, Equatable {
     var movie: Movie
     
     var body: some View {

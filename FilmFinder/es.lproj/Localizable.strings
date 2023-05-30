@@ -27,3 +27,6 @@
 
 "NetworkManagerNoInternet" = "Sin conexión a internet.";
 "NetworkManagerNoInternetAlert" = "Parece que no tienes conexión a internet.";
+
+"MovieListDownloadErrorAlertTitle" = "Error";
+"MovieListDownloadErrorAlertDescription" = "Parece que ha habido un error descargando datos, inténtalo de nuevo más tarde.";

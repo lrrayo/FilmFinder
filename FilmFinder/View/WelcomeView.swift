@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+///View for large devices
 struct WelcomeView: View {
     var body: some View {
         VStack {

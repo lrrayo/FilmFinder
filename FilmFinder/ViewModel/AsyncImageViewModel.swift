@@ -8,9 +8,8 @@
 import Foundation
 
 class AsyncImageViewModel: ObservableObject {
-    private let service = WebService()
     
     func getMovieImageUrl(imageType aImageType: ImageType, path aPath: String) -> URL? {
-        return service.getImageQuery(withImageType: aImageType, andPath: aPath)
+        return WebService.sharedInstance.getImageQuery(withImageType: aImageType, andPath: aPath)
     }
 }

@@ -49,7 +49,7 @@ struct SearchView: View {
             } else {
                 NoInternetConnectionView()
             }
-            WelcomeView()
+            WelcomeView() //Just for large devices
         }
         .searchable(text: $viewModel.searchText)
         .onChange(of: viewModel.searchText) { textValue in
